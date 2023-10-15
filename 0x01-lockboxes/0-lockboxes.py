@@ -1,13 +1,12 @@
-#!/usr/bin/python3
-"""Lockbox"""
-
 def canUnlockAll(boxes):
-    """A function that determines if all lockboxes can be opened"""
-    keys = []
+    """Unlock boxes"""
+    counts = 0
+    save_keys = dict()
 
-    for i in range(len(boxes)):
-        for key in boxes[i]:
-            if key != i and key < len(boxes):
-                keys.append(key)
-    keys = set(keys)
-    return (len(keys) == len(boxes) or len(keys) == len(boxes) -1)
+    while counts < len(boxes):
+        for key in boxes[counts]:
+            if key != counts:
+                save_keys[key] = key
+        counts += 1
+
+    return (len(save_keys) == len(boxes) or len(save_keys) == len(boxes) -1)
