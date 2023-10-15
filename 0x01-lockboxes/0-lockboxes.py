@@ -1,16 +1,13 @@
 #!/usr/bin/python3
-"""Unlock boxes"""
-
+"""Lockbox"""
 
 def canUnlockAll(boxes):
-"""
-    :type boxes: List[List[int]]
-    :rtype: bool
-"""
-    unlocked = set([0])
-    while unlocked:
-        box = unlocked.pop()
-        for key in boxes[box]:
-            if key not in unlocked:
-                unlocked.add(key)
-    return len(unlocked) == len(boxes)
+    """A function that determines if all lockboxes can be opened"""
+    keys = []
+
+    for i in range(len(boxes)):
+        for key in boxes[i]:
+            if key != i and key < len(boxes):
+                keys.append(key)
+    keys = set(keys)
+    return (len(keys) == len(boxes) or len(keys) == len(boxes) - 1)
