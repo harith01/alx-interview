@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Lockbox"""
 
+
 def canUnlockAll(boxes):
     """A function that determines if all lockboxes can be opened"""
     keys = []
