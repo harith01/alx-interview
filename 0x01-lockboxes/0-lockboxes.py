@@ -2,15 +2,12 @@
 """Lockbox"""
 
 def canUnlockAll(boxes):
-    counts = 0
-    save_keys = dict()
-
-    # Looping through the boxes
-    while counts < len(boxes):
-        for key in boxes[counts]:
-            # Check if a box's key is in the box, if yes, ignore.
-            if key != counts:
-                save_keys[key] = key
-        counts += 1
-
-    return (len(save_keys) == len(boxes) or len(save_keys) == len(boxes) -1)
+    """A function that determines if all lockboxes can be opened"""
+    keys = []
+    for i in range(len(boxes)):
+        for key in boxes[i]:
+            if key != i and key < len(boxes):
+                keys.append(key)
+    keys = set(keys)
+    print(keys)
+    return (len(keys) == len(boxes) or len(keys) == len(boxes) -1)
