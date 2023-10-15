@@ -1,15 +1,16 @@
 #!/usr/bin/python3
 """Unlock boxes"""
 
+
 def canUnlockAll(boxes):
-    """Unlock boxes"""
-    counts = 0
-    save_keys = dict()
-
-    while counts < len(boxes):
-        for key in boxes[counts]:
-            if key != counts:
-                save_keys[key] = key
-        counts += 1
-
-    return (len(save_keys) == len(boxes) or len(save_keys) == len(boxes) -1)
+"""
+    :type boxes: List[List[int]]
+    :rtype: bool
+"""
+    unlocked = set([0])
+    while unlocked:
+        box = unlocked.pop()
+        for key in boxes[box]:
+            if key not in unlocked:
+                unlocked.add(key)
+    return len(unlocked) == len(boxes)
