@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+"""Unlock boxes"""
+
 def canUnlockAll(boxes):
     """Unlock boxes"""
     counts = 0
