@@ -4,6 +4,10 @@
 
 def canUnlockAll(boxes):
     """A function that determines if all lockboxes can be opened"""
+
+    if len(boxes[0]) == 0:
+        return False
+
     keys = []
 
     for i in range(len(boxes)):
