@@ -1,4 +1,9 @@
 #!/usr/bin/python3
+"""
+Determine if all boxes can be unlocked
+"""
+
+
 def canUnlockAll(boxes):
     """A method that determines if all
     boxes can be unlocked"""
