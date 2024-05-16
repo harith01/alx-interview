@@ -1,39 +1,37 @@
 #!/usr/bin/python3
-"""Log Parser"""
+'''a script that reads stdin line by line and computes metrics'''
+
 
 import sys
-import re
 
-fp = (
-        r'\s*(?P<ip>\S+)\s*',
-        r'\s*\[(?P<date>\d+\-\d+\-\d+ \d+:\d+:\d+\.\d+)\]',
-        r'\s*"(?P<request>[^"]*)"\s*',
-        r'\s*(?P<status_code>\S+)',
-        r'\s*(?P<file_size>\d+)'
-    )
-log_fmt = '{}\\-{}{}{}{}\\s*'.format(fp[0], fp[1], fp[2], fp[3], fp[4])
-count = 0;
-status_codes_dict = {'200': 0, '301': 0, '400': 0, '401': 0, '403': 0,
-                     '404': 0, '405': 0, '500': 0}
+cache = {'200': 0, '301': 0, '400': 0, '401': 0,
+         '403': 0, '404': 0, '405': 0, '500': 0}
 total_size = 0
-for line in sys.stdin:
-    if re.fullmatch(log_fmt, line):
-        line = line.split(" ")
-        file_size = int(line[-1].strip("\n"))
-        status_code = line[-2]
-        if status_code in status_codes_dict.keys():
-            status_codes_dict[status_code] += 1
-        total_size += file_size
-        count += 1
-        if count == 10:
-            try:
-                count = 0
-                print("File size: {}".format(total_size))
-                for key, value in sorted(status_codes_dict.items()):
-                    if value != 0:
-                        print("{}: {}".format(key, value))
-            except(KeyboardInterrupt, EOFError):
-                print("File size: {}".format(total_size))
-                for key, value in sorted(status_codes_dict.items()):
-                    if value != 0:
-                        print("{}: {}".format(key, value))
+counter = 0
+
+try:
+    for line in sys.stdin:
+        line_list = line.split(" ")
+        if len(line_list) > 4:
+            code = line_list[-2]
+            size = int(line_list[-1])
+            if code in cache.keys():
+                cache[code] += 1
+            total_size += size
+            counter += 1
+
+        if counter == 10:
+            counter = 0
+            print('File size: {}'.format(total_size))
+            for key, value in sorted(cache.items()):
+                if value != 0:
+                    print('{}: {}'.format(key, value))
+
+except Exception as err:
+    pass
+
+finally:
+    print('File size: {}'.format(total_size))
+    for key, value in sorted(cache.items()):
+        if value != 0:
+            print('{}: {}'.format(key, value))
